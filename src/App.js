@@ -1,14 +1,16 @@
-import {StyleSheet, Text, View} from 'react-native';
+// import React from 'react';
+// import ToDoScreen from './screens/ToDoScreen/ToDoScreen';
+// export default function App() {
+//   return <ToDoScreen />;
+// }
 import React from 'react';
-
-const App = () => {
+import {Provider} from 'react-redux';
+import store from './redux/store/store';
+import ToDoScreen from './screens/ToDoScreen/ToDoScreen';
+export default function App() {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <Provider store={store}>
+      <ToDoScreen />
+    </Provider>
   );
-};
-
-export default App;
-
-const styles = StyleSheet.create({});
+}
