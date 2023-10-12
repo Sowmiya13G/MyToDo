@@ -1,15 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import {Keyboard, Text, View, FlatList} from 'react-native';
+import {
+  Keyboard,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import ToDoInput from '../../components/ToDoInput/ToDoInput';
 import ToDoItem from '../../components/ToDoItem/ToDoItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from './styles';
 export default function ToDoScreen() {
   const [tasks, setTasks] = useState([]);
-
+  const [backgroundColor, setBackgroundColor] = useState('#1E1A3C');
   useEffect(() => {
     loadTasks();
-  }, []);
+    StatusBar.setBackgroundColor(backgroundColor);
+  }, [backgroundColor]);
 
   const loadTasks = async () => {
     try {
@@ -59,24 +67,27 @@ export default function ToDoScreen() {
       console.error('Error saving tasks to AsyncStorage:', error);
     }
   };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>TODO LIST</Text>
-      <FlatList
-        data={tasks}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => (
-          <View style={styles.taskContainer}>
-            <ToDoItem
-              index={index + 1}
-              task={item}
-              deleteTask={() => deleteTask(index)}
-              editTask={editTask}
-            />
-          </View>
-        )}
-      />
-      <ToDoInput addTask={addTask} />
-    </View>
+    <SafeAreaView style={{flex: 1, backgroundColor}}>
+      <View style={styles.container}>
+        <Text style={styles.heading}>TODAY'S TODO LIST</Text>
+        <FlatList
+          data={tasks}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item, index}) => (
+            <View style={styles.taskContainer}>
+              <ToDoItem
+                index={index + 1}
+                task={item}
+                deleteTask={() => deleteTask(index)}
+                editTask={editTask}
+              />
+            </View>
+          )}
+        />
+        <ToDoInput addTask={addTask} />
+      </View>
+    </SafeAreaView>
   );
 }

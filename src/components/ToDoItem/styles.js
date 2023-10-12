@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#3E3364',
     borderRadius: 12,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     flex: 1,
     paddingHorizontal: 10,
@@ -35,9 +35,9 @@ export const styles = StyleSheet.create({
     width: '90%',
     fontSize: 16,
   },
-  delete: {
-    marginLeft: 10,
-  },
+  // delete: {
+  //   marginLeft: 10,
+  // },
   buttonsContainer: {
     flexDirection: 'row',
   },

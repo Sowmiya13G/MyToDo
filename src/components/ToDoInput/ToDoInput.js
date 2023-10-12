@@ -31,7 +31,7 @@ const TaskInputField = props => {
       />
       <TouchableOpacity onPress={() => handleAddTask(task)}>
         <View style={styles.button}>
-          <Icon name="keyboard-arrow-up" size={24} color="black" />
+          <Icon name="arrow-up" size={24} color="black" />
         </View>
       </TouchableOpacity>
     </KeyboardAvoidingView>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, TouchableOpacity, TextInput} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles';
 
 export default function ToDoItem(props) {
@@ -14,6 +14,7 @@ export default function ToDoItem(props) {
   const handleSave = () => {
     setIsEditing(false);
     props.editTask(props.index - 1, editedTask);
+    console.log('Edited Text:', editedTask);
   };
 
   return (
@@ -35,17 +36,17 @@ export default function ToDoItem(props) {
         <View style={styles.buttonsContainer}>
           {isEditing ? (
             <TouchableOpacity onPress={handleSave}>
-              <Icon name="save" size={20} color="#007AFF" />
+              <Icon name="save" size={20} color="#CCC" />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={handleEdit}>
-              <Icon name="edit" size={20} color="#007AFF" />
+              <Icon name="edit" size={20} color="#CCC" />
             </TouchableOpacity>
           )}
           <TouchableOpacity
             onPress={() => props.deleteTask()}
             style={styles.button}>
-            <Icon name="delete" size={20} color="#FF3B30" />
+            <Icon name="trash-o" size={20} color="#FF3B30" />
           </TouchableOpacity>
         </View>
       </View>

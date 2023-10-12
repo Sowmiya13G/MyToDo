@@ -1,8 +1,3 @@
-// import React from 'react';
-// import ToDoScreen from './screens/ToDoScreen/ToDoScreen';
-// export default function App() {
-//   return <ToDoScreen />;
-// }
 import React from 'react';
 import {Provider} from 'react-redux';
 import store from './redux/store/store';
