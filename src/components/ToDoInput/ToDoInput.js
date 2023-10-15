@@ -5,16 +5,17 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 import {styles} from './style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import {addTask} from '../../redux/actions/action';
 const TaskInputField = props => {
   const [task, setTask] = useState();
-
-  const handleAddTask = value => {
-    if (task === '') return;
-    props.addTask(task);
+  const dispatch = useDispatch();
+  const handleAddTask = () => {
+    if (task.trim() === '') return;
+    dispatch(addTask(task));
     setTask('');
   };
 

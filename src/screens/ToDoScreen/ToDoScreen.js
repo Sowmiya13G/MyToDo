@@ -7,12 +7,15 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import ToDoInput from '../../components/ToDoInput/ToDoInput';
 import ToDoItem from '../../components/ToDoItem/ToDoItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from './styles';
+
 export default function ToDoScreen() {
-  const [tasks, setTasks] = useState([]);
+  const tasks = useSelector(state => state.tasks.tasks);
+  const dispatch = useDispatch();
   const [backgroundColor, setBackgroundColor] = useState('#1E1A3C');
   useEffect(() => {
     loadTasks();
@@ -22,45 +25,36 @@ export default function ToDoScreen() {
   const loadTasks = async () => {
     try {
       const savedTasks = await AsyncStorage.getItem('tasks');
-      if (savedTasks !== null) {
-        setTasks(JSON.parse(savedTasks));
-      }
+      console.log('savedTasks', savedTasks);
     } catch (error) {
       console.error('Error loading tasks from AsyncStorage:', error);
     }
   };
-
+  const saveTasksToAsyncStorage = async updatedTasks => {
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    } catch (error) {
+      console.error('Error saving tasks to AsyncStorage:', error);
+    }
+  };
   const addTask = async task => {
     if (task == null) return;
     const newTasks = [...tasks, task];
-    setTasks(newTasks);
-
-    // Save updated tasks to AsyncStorage
-    try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
-    } catch (error) {
-      console.error('Error saving tasks to AsyncStorage:', error);
-    }
-
+    dispatch(setTasks(newTasks));
+    saveTasksToAsyncStorage(newTasks);
     Keyboard.dismiss();
   };
+
   const editTask = (index, editedTask) => {
     const updatedTasks = [...tasks];
     updatedTasks[index] = editedTask;
-    setTasks(updatedTasks);
-
-    // Save updated tasks to AsyncStorage
-    try {
-      AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
-    } catch (error) {
-      console.error('Error saving tasks to AsyncStorage:', error);
-    }
+    dispatch(setTasks(updatedTasks));
+    saveTasksToAsyncStorage(updatedTasks);
   };
+
   const deleteTask = async deleteIndex => {
     const newTasks = tasks.filter((value, index) => index !== deleteIndex);
     setTasks(newTasks);
-
-    // Save updated tasks to AsyncStorage
     try {
       await AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
     } catch (error) {

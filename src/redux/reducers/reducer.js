@@ -4,7 +4,7 @@ const initialState = {
   tasks: [],
 };
 
-const rootReducer = (state = initialState, action) => {
+const taskReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TASK:
       return {
@@ -34,4 +34,4 @@ const rootReducer = (state = initialState, action) => {
   }
 };
 
-export default rootReducer;
+export default taskReducer;
