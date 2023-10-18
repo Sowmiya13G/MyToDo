@@ -3,9 +3,9 @@ import {Text, View, TouchableOpacity, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles';
 
-export default function ToDoItem(props) {
+const ToDoItem = ({task, index, editTask, deleteTask}) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTask, setEditedTask] = useState(props.task);
+  const [editedTask, setEditedTask] = useState(task);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -13,14 +13,14 @@ export default function ToDoItem(props) {
 
   const handleSave = () => {
     setIsEditing(false);
-    props.editTask(props.index - 1, editedTask);
+    editTask(editedTask);
     console.log('Edited Text:', editedTask);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.indexContainer}>
-        <Text style={styles.index}>{props.index}</Text>
+        <Text style={styles.index}>{index}</Text>
       </View>
       <View style={styles.taskContainer}>
         {isEditing ? (
@@ -31,7 +31,7 @@ export default function ToDoItem(props) {
             autoFocus
           />
         ) : (
-          <Text style={styles.task}>{props.task}</Text>
+          <Text style={styles.task}>{task}</Text>
         )}
         <View style={styles.buttonsContainer}>
           {isEditing ? (
@@ -43,13 +43,12 @@ export default function ToDoItem(props) {
               <Icon name="edit" size={20} color="#CCC" />
             </TouchableOpacity>
           )}
-          <TouchableOpacity
-            onPress={() => props.deleteTask()}
-            style={styles.button}>
+          <TouchableOpacity onPress={deleteTask} style={styles.button}>
             <Icon name="trash-o" size={20} color="#FF3B30" />
           </TouchableOpacity>
         </View>
       </View>
     </View>
   );
-}
+};
+export default ToDoItem;

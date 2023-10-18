@@ -1,4 +1,4 @@
-import {ADD_TASK, EDIT_TASK, DELETE_TASK} from '../actions/action';
+import {ADD_TASK, EDIT_TASK, DELETE_TASK, SET_TASKS} from '../actions/action';
 
 const initialState = {
   tasks: [],
@@ -28,7 +28,11 @@ const taskReducer = (state = initialState, action) => {
         ...state,
         tasks: newTasks,
       };
-
+    case SET_TASKS:
+      return {
+        ...state,
+        tasks: action.payload,
+      };
     default:
       return state;
   }
